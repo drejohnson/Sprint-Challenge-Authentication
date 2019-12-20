@@ -19,9 +19,13 @@ const LoginForm = () => {
   const onSubmit = async e => {
     e.preventDefault();
     try {
-      const res = axiosWithAuth().post('/api/login', userCredentials);
-      localStorage.setItem('token', res.data.payload);
-      history.push('/friends');
+      const res = await axiosWithAuth().post(
+        '/api/auth/login',
+        userCredentials
+      );
+      console.log(res.data);
+      localStorage.setItem('token', res.data.token);
+      history.push('/jokes');
     } catch (error) {
       console.error(error);
     }
