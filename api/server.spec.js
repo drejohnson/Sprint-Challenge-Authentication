@@ -20,3 +20,15 @@ describe('GET /', function() {
       });
   });
 });
+
+describe('GET /api/users', () => {
+  it('should return 401 OK', async () => {
+    const res = await request(server).get('/api/users');
+    expect(res.statusCode).toEqual(401);
+  });
+
+  it('should return shall not pass!', async () => {
+    const res = await request(server).get('/api/users');
+    expect(res.body.you).toBe('shall not pass!');
+  });
+});
