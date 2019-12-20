@@ -32,3 +32,19 @@ describe('GET /api/users', () => {
     expect(res.body.you).toBe('shall not pass!');
   });
 });
+
+describe('Post /api/auth/login', () => {
+  it('should check that jokes response is an array', async () => {
+    const res = await request(server)
+      .post('/api/auth/login')
+      .send({
+        username: 'johnsnow',
+        password: 'password1234'
+      });
+    const token = res.body.token;
+    const jokesRes = await request(server)
+      .get('/api/jokes')
+      .set('authorization', token);
+    expect(Array.isArray(jokesRes.body)).toBe(true);
+  });
+});
