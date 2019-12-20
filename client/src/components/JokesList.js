@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 const JokesList = () => {
   const [jokes, setJokes] = useState([]);
@@ -7,18 +8,19 @@ const JokesList = () => {
     (async () => {
       try {
         const res = await axiosWithAuth().get('/api/jokes');
+        console.log(res.data);
         setJokes(res.data);
       } catch (error) {
-        console.error(err);
+        console.error(error);
       }
     })();
-  });
+  }, [setJokes]);
 
   return (
     <div>
-      {jokes.map(joke => (
-        <div key={joke.id}>
-          <h2>{joke.name}</h2>
+      {jokes.map(({ id, joke }) => (
+        <div key={id}>
+          <h2>{joke}</h2>
         </div>
       ))}
     </div>
